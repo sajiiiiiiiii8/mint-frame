@@ -1,20 +1,75 @@
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <title>Mint SAJAD NFT</title>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta property="og:title" content="Mint SAJAD NFT" />
+  <meta property="og:image" content="https://mint-frame-rose.vercel.app/monad_nft_image.jpg" />
+  <meta name="fc:frame" content="vNext" />
+  <meta name="fc:frame:image" content="https://mint-frame-rose.vercel.app/monad_nft_image.jpg" />
+  <title>Monad Mini Mint</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      margin-top: 50px;
+      background-color: #111;
+      color: white;
+    }
+    img {
+      max-width: 300px;
+      border-radius: 16px;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+    }
+    button {
+      background-color: limegreen;
+      border: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      border-radius: 8px;
+      margin-top: 20px;
+      cursor: pointer;
+      color: #000;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+</head>
+<body>
+  <h1>Mint SAJAD NFT</h1>
+  <img src="monad_nft_image.jpg" alt="SAJAD NFT" />
+  <div>
+    <p>Cost: 0.2 Testnet MON</p>
+    <button onclick="connectWallet()">Connect</button>
+    <button onclick="mintNFT()">Mint</button>
+  </div>
 
-    <meta property="og:title" content="Mint SAJAD NFT" />
-    <meta property="og:image" content="https://mint-frame-rose.vercel.app/monad_nft_image.jpg" />
+  <script>
+    let signer;
 
-    <meta name="fc:frame" content="vNext" />
-    <meta name="fc:frame:image" content="https://mint-frame-rose.vercel.app/monad_nft_image.jpg" />
+    async function connectWallet() {
+      if (!window.ethereum) return alert("Please install MetaMask");
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      await provider.send("eth_requestAccounts", []);
+      signer = provider.getSigner();
+      alert("Wallet connected!");
+    }
 
-    <meta name="fc:frame:button:1" content="Mint Now" />
-    <meta name="fc:frame:button:1:action" content="link" />
-    <meta name="fc:frame:button:1:target" content="https://magiceden.io/mint-terminal/monad-testnet/0x85dcc4acf953436be7c41986560d1bdb144a4bbe" />
-  </head>
-  <body>
-    <h1 style="text-align:center;">Farcaster Frame برای SAJAD NFT</h1>
-    <p style="text-align:center;">این صفحه مخصوص Farcaster طراحی شده — تو Warpcast تستش کن.</p>
-  </body>
+    async function mintNFT() {
+      if (!signer) return alert("Connect wallet first");
+
+      const contractAddress = "0x85dcc4acf953436be7c41986560d1bdb144a4bbe"; // Replace if needed
+      const abi = ["function mint() public"];
+
+      const contract = new ethers.Contract(contractAddress, abi, signer);
+      try {
+        const tx = await contract.mint();
+        await tx.wait();
+        alert("Mint successful!");
+      } catch (err) {
+        console.error(err);
+        alert("Mint failed");
+      }
+    }
+  </script>
+</body>
 </html>
