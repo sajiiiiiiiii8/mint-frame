@@ -5,8 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta property="og:title" content="Mint SAJAD NFT" />
   <meta property="og:image" content="https://mint-frame-rose.vercel.app/monad_nft_image.jpg" />
+
   <meta name="fc:frame" content="vNext" />
   <meta name="fc:frame:image" content="https://mint-frame-rose.vercel.app/monad_nft_image.jpg" />
+  <meta name="fc:frame:button:1" content="Mint Now" />
+  <meta name="fc:frame:button:1:action" content="link" />
+  <meta name="fc:frame:button:1:target" content="https://mint-frame-rose.vercel.app/" />
+
   <title>Monad Mini Mint</title>
   <style>
     body {
@@ -57,7 +62,7 @@
     async function mintNFT() {
       if (!signer) return alert("Connect wallet first");
 
-      const contractAddress = "0x85dcc4acf953436be7c41986560d1bdb144a4bbe"; // Replace if needed
+      const contractAddress = "0x85dcc4acf953436be7c41986560d1bdb144a4bbe";
       const abi = ["function mint() public"];
 
       const contract = new ethers.Contract(contractAddress, abi, signer);
